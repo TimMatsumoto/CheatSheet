@@ -1,4 +1,4 @@
-\documentclass[3pt,letter]{article}
+\documentclass[1pt,letter]{article}
 
     \usepackage{fullpage}
     \usepackage{color}
@@ -45,243 +45,39 @@
         
 
 \begin{document}
-\par
+% \par
 \begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
 \ParallelLText{
 % \begin{minipage}{0.45\textwidth}
 % \begin{tabular}{|p{\textwidth}}
 
-\vspace{-3em}
+% \vspace{-3em}
 
-\section*{SAMPLE FROM A3}
-
-The above points are allocated for following the general homework instructions on the course homepage.
-
-
-\section{Finding Similar Items}
-
-For this question we'll use the Amazon product data set\footnote{The author of the data set has asked for the following citations: (1) Ups and downs: Modeling the visual evolution of fashion trends with one-class collaborative filtering. R. He, J. McAuley. WWW, 2016, and (2) Image-based recommendations on styles and substitutes. J. McAuley, C. Targett, J. Shi, A. van den Hengel. SIGIR, 2015.} from \url{http://jmcauley.ucsd.edu/data/amazon/}. We will focus on the ``Patio, Lawn, and Garden'' section. You should start by downloading the ratings at \\
-\url{https://stanford.io/2Q7QTvu} and place the file in your \texttt{data} directory with the original filename. Once you do that, running \texttt{python main.py -q 1} should do the following steps:
-
-\begin{itemize}
-\item Load the raw ratings data set into a Pandas dataframe.
-\item Construct the user-product matrix as a sparse matrix (to be precise, a \verb|scipy.sparse.csr_matrix|).
-\item Create bi-directional mappings from the user ID (e.g. ``A2VNYWOPJ13AFP'') to the integer index into the rows of \texttt{X}.
-\item Create bi-directional mappings from the item ID (e.g. ``0981850006'') to the integer index into the columns of \texttt{X}.
-\end{itemize}
-
-\subsection{Exploratory data analysis}
-
-\subsubsection{Most popular item}
-
-Find the item with the most total stars. \blu{Submit the product name and the number of stars}.
-
-Note: once you find the ID of the item, you can look up the name by going to the url \\ \verb|https://www.amazon.com/dp/ITEM_ID|, where \verb|ITEM_ID| is the ID of the item.
-For example, the URL for item ID ``B00CFM0P7Y'' is \url{https://www.amazon.com/dp/B00CFM0P7Y}. 
-
-
-\subsubsection{User with most reviews}
-
-
-
-\blu{Find the user who has rated the most items, and the number of items they rated.}
-
-
-\subsubsection{Histograms}
-
-\blu{Make the following histograms:}
-\begin{enumerate}[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]
-\item The number of ratings per user
-\item The number of ratings per item
-\item The ratings themselves
-\end{enumerate}
-
-Note: for the first two, use \verb|plt.yscale('log', nonposy='clip')| to put the histograms on a log-scale. Also, you can use \verb|X.getnnz| to get the total number of nonzero elements along a specific axis.
-
-\subsection{Finding similar items with nearest neighbours}
-
-We'll use scikit-learn's \texttt{neighbors.NearestNeighbors} object to find the items most similar to the example item above, namely the Brass Grill Brush 18 Inch Heavy Duty and Extra Strong, Solid Oak Handle, at URL \url{https://www.amazon.com/dp/B00CFM0P7Y}.
-
-\blu{Find the 5 most similar items to the Grill Brush using the following metrics:}
-
+\section*{Linear Algebra}
+\vspace{-1em}
+Basics
 \begin{enumerate}
-\item Euclidean distance (the \texttt{NearestNeighbors} default)
-\item Normalized Euclidean distance (you'll need to do the normalization)
-\item Cosine similarity (by setting \texttt{metric='cosine'})
+    \item $w^T x_i = \sum_{j=1}^d w_j x_{ij}$,  $x_i, w$ is $d$ x $1$  
+    \item $a^T A b = b^T B^T a$ both sides are vectors
+    \item $\half\|Xw-y\|^2_2 = \half \sum_{i=1}^n (w^T x_i -y_i) = \half w^T X^T X w -w^TX^Ty + \half y^Ty$
+    \item $\nabla \text{const} = 0, \nabla w^t b = w, \nabla \half w^T A w = Aw$ if $A$ symmetric
+    \item $\nabla \half\|Xw-y\|^2_2 = X^T X -X^Ty$
+    \item Normal equation $X^T Xw =X^Ty$
 \end{enumerate}
-
-Some notes/hints...
-
-\begin{itemize}
-\item If you run \texttt{python main.py -q 1.2}, it will grab the row of \texttt{X} associated with the grill brush. The mappers take care of going back and forther between the IDs (like ``B00CFM0P7Y'') and the indices of the sparse array ($0,1,2,\ldots$).
-\item Keep in mind that scikit-learn's \texttt{NearestNeighbors} is for taking neighbors across rows, but here we're working across columns.
-\item Keep in mind that scikit-learn's \texttt{NearestNeighbors} will include the query item itself as one of the nearest neighbours if the query item is in the ``training set''.
-\item Normalizing the columns of a matrix would usually be reasonable to implement, but because $X$ is stored as a sparse matrix it's a bit more of a mess. Therefore, use \texttt{sklearn.preprocessing.normalize} to help you with the normalization in part 2.
-\end{itemize}
-
-\blu{Did normalized Euclidean distance and cosine similarity yields the same similar items, as expected?}
-
-
-\subsection{Total popularity}
-
-\blu{For both Euclidean distance and cosine similarity, find the number of reviews for each of the 5 recommended items and report it. Do the results make sense given what we discussed in class about Euclidean distance vs. cosine similarity and popular items?}
-
-Note: in \texttt{main.py} you are welcome to combine this code with your code from the previous part, so that you don't have to copy/paste all that code in another section of \texttt{main.py}.
-
-
-\section{Matrix Notation and Minimizing Quadratics}
-
-
-\subsection{Converting to Matrix/Vector/Norm Notation}
-
-Using our standard supervised learning notation ($X$, $y$, $w$)
-express the following functions in terms of vectors, matrices, and norms (there should be no summations or maximums).
-\blu{\enum{
-\item $\max_{i \in \{1,2,\dots,n\}}  |w^Tx_i - y_i|$.
-\item $\sum_{i=1}^n v_i(w^Tx_i  - y_i)^2 + \frac{\lambda}{2}\sum_{j=1}^d w_j^2$.
-\item $\left(\sum_{i=1}^n |w^Tx_i - y_i|\right)^2 +  \half\sum_{j=1}^{d} \lambda_j|w_j|$.
-}}
-Note that in part 2 we give a \emph{weight} $v_i$ to each training example, whereas in part 3 we are regularizing the parameters with different weights $\lambda_j$.
-You can use $V$ to denote a diagonal matrix that has the values $v_i$ along the diagonal, and $\Lambda$ as a diagonal matrix that has the $\lambda_j$ values along the diagonal. You can assume that all the $v_i$ and $\lambda_i$ values are non-negative. 
-
-\subsection{Minimizing Quadratic Functions as Linear Systems}
-
-Write finding a minimizer $w$ of the functions below as a system of linear equations (using vector/matrix notation and simplifying as much as possible). Note that all the functions below are convex  so finding a $w$ with $\nabla f(w) = 0$ is sufficient to minimize the functions (but show your work in getting to this point).
-
-\blu{\enum{
-\item $f(w) = \frac{1}{2}\norm{w-v}^2$ (projection of $v$ onto real space).
-\item $f(w)= \frac{1}{2}\norm{Xw - y}^2 + \frac{1}{2}w^T\Lambda w$ (least squares with weighted regularization).
-\item $f(w) = \frac{1}{2}\sum_{i=1}^n v_i (w^Tx_i - y_i)^2 + \frac{\lambda}{2}\norm{w-w^0}^2$ (weighted least squares shrunk towards non-zero $w^0$).
-}}
-Above we assume that $v$ and $w^0$ are $d$ by $1$ vectors, and $\Lambda$ is a $d$ by $d$ diagonal matrix (with positive entries along the diagonal). You can use $V$ as a diagonal matrix containing the $v_i$ values along the diagonal.
-
-Hint: Once you convert to vector/matrix notation, you can use the results from class to quickly compute these quantities term-wise.
-As a sanity check for your derivation, make sure that your results have the right dimensions.
-
-}
-\ParallelRText{\noindent
-% \end{tabular}
-% \end{minipage}%
-
-% \hfill
-% \begin{minipage}{0.45\textwidth}
-% \begin{tabular}{|p{\textwidth}}
-
-\section{Robust Regression and Gradient Descent}
-
-If you run \verb|python main.py -q 3|, it will load a one-dimensional regression
-dataset that has a non-trivial number of `outlier' data points.
-These points do not fit the general trend of the rest of the data,
-and pull the least squares model away from the main downward trend that most data points exhibit:
-
-Note: we are fitting the regression without an intercept here, just for simplicity of the homework question.
-In reality one would rarely do this. But here it's OK because the ``true'' line
-passes through the origin (by design). In Q\ref{biasvar} we'll address this explicitly.
-
-\subsection{Weighted Least Squares in One Dimension}
-
-One of the most common variations on least squares is \emph{weighted} least squares. In this formulation, we have a weight $v_i$ for every training example. To fit the model, we minimize the weighted squared error,
-\[
-f(w) =  \frac{1}{2}\sum_{i=1}^n v_i(w^Tx_i - y_i)^2.
-\]
-In this formulation, the model focuses on making the error small for examples $i$ where $v_i$ is high. Similarly, if $v_i$ is low then the model allows a larger error. Note: these weights $v_i$ (one per training example) are completely different from the model parameters $w_j$ (one per feature), which, confusingly, we sometimes also call "weights".
-
-Complete the model class, \texttt{WeightedLeastSquares}, that implements this model
-(note that Q2.2.3 asks you to show how a few similar formulation can be solved as a linear system).
-Apply this model to the data containing outliers, setting $v = 1$ for the first
-$400$ data points and $v = 0.1$ for the last $100$ data points (which are the outliers).
-\blu{Hand in your code and the updated plot}.
-
-\subsection{Smooth Approximation to the L1-Norm}
-
-Unfortunately, we typically do not know the identities of the outliers. In situations where we suspect that there are outliers, but we do not know which examples are outliers, it makes sense to use a loss function that is more robust to outliers. In class, we discussed using the sum of absolute values objective,
-\[
-f(w) = \sum_{i=1}^n |w^Tx_i - y_i|.
-\]
-This is less sensitive to outliers than least squares, but it is non-differentiable and harder to optimize. Nevertheless, there are various smooth approximations to the absolute value function that are easy to optimize. One possible approximation is to use the log-sum-exp approximation of the max function\footnote{Other possibilities are the Huber loss, or $|r|\approx \sqrt{r^2+\epsilon}$ for some small $\epsilon$.}:
-\[
-|r| = \max\{r, -r\} \approx \log(\exp(r) + \exp(-r)).
-\]
-Using this approximation, we obtain an objective of the form
-\[
-f(w) {=} \sum_{i=1}^n  \log\left(\exp(w^Tx_i - y_i) + \exp(y_i - w^Tx_i)\right).
-\]
-which is smooth but less sensitive to outliers than the squared error. \blu{Derive
- the gradient $\nabla f$ of this function with respect to $w$. You should show your work but you do \underline{not} have to express the final result in matrix notation.}
-
-\subsection{Robust Regression}
-
-The class \texttt{LinearModelGradient} is the same as \texttt{LeastSquares}, except that it fits the least squares model using a gradient descent method. If you run \verb|python main.py -q 3.3| you'll see it produces the same fit as we obtained using the normal equations.
-
-The typical input to a gradient method is a function that, given $w$, returns $f(w)$ and $\nabla f(w)$. See \texttt{funObj} in \texttt{LinearModelGradient} for an example. Note that the \texttt{fit} function of \texttt{LinearModelGradient} also has a numerical check that the gradient code is approximately correct, since implementing gradients is often error-prone.\footnote{Sometimes the numerical gradient checker itself can be wrong. See CPSC 303 for a lot more on numerical differentiation.}
-
-An advantage of gradient-based strategies is that they are able to solve
-problems that do not have closed-form solutions, such as the formulation from the
-previous section. The class \texttt{LinearModelGradient} has most of the implementation
-of a gradient-based strategy for fitting the robust regression model under the log-sum-exp approximation.
-The only part missing is the function and gradient calculation inside the \texttt{funObj} code.
-\blu{Modify \texttt{funObj} to implement the objective function and gradient based on the smooth
-approximation to the absolute value function (from the previous section). Hand in your code, as well
-as the plot obtained using this robust regression approach.}
-
-
-\section{Linear Regression and Nonlinear Bases}
-
-In class we discussed fitting a linear regression model by minimizing the squared error.
-In this question, you will start with a data set where least squares performs poorly.
-You will then explore how adding a bias variable and using nonlinear (polynomial) bases can drastically improve the performance.
-You will also explore how the complexity of a basis affects both the training error and the test error.
-In the final part of the question, it will be up to you to design a basis with better performance than polynomial bases.
-
-\subsection{Adding a Bias Variable}
-
-If you run  \verb|python main.py -q 4|, it will:
-\enum{
-\item Load a one-dimensional regression dataset.
-\item Fit a least-squares linear regression model.
-\item Report the training error.
-\item Report the test error (on a dataset not used for training).
-\item Draw a figure showing the training data and what the linear model looks like.
-}
-Unfortunately, this is an awful model of the data. The average squared training error on the data set is over 28000
-(as is the test error), and the figure produced by the demo confirms that the predictions are usually nowhere near
- the training data:
-The $y$-intercept of this data is clearly not zero (it looks like it's closer to $200$),
-so we should expect to improve performance by adding a \emph{bias} (a.k.a. intercept) variable, so that our model is
-\[
-y_i = w^Tx_i + w_0.
-\]
-instead of
-\[
-y_i = w^Tx_i.
-\]
-\blu{In file \texttt{linear\string_model.py}, complete the class, \texttt{LeastSquaresBias},
-that has the same input/model/predict format as the \texttt{LeastSquares} class,
-but that adds a \emph{bias} variable (also called an intercept) $w_0$ (also called $\beta$ in lecture). Hand in your new class, the updated plot,
-and the updated training/test error.}
-
-Hint: recall that adding a bias $w_0$ is equivalent to adding a column of ones to the matrix $X$. Don't forget that you need to do the same transformation in the \texttt{predict} function.
-
-
-\subsection{Polynomial Basis}
-
-Adding a bias variable improves the prediction substantially, but the model is still problematic because the target seems to be a \emph{non-linear} function of the input.
-Complete \texttt{LeastSquarePoly} class, that takes a data vector $x$ (i.e., assuming we only have one feature) and the polynomial order $p$. The function should perform a least squares fit based on a matrix $Z$ where each of its rows contains the values $(x_{i})^j$ for $j=0$ up to $p$. E.g., \texttt{LeastSquaresPoly.fit(x,y)}  with $p = 3$ should form the matrix
-\[
-Z =
-\left[\begin{array}{cccc}
-1 & x_1 & (x_1)^2 & (x_1)^3\\
-1 & x_2 & (x_2)^2 & (x_2)^3\\
-\vdots\\
-1 & x_n & (x_n)^2 & (x_N)^3\\
-\end{array}
-\right],
-\]
-and fit a least squares model based on it.
-\blu{Hand in the new class, and report the training and test error for $p = 0$ through $p= 10$. Explain the effect of $p$ on the training error and on the test error.}
-
-Note: you should write the code yourself; don't use a library like sklearn's \texttt{PolynomialFeatures}.
-
+Run Time
+\begin{enumerate}
+    \item $X^Ty: O(nd)$
+    \item $X^TX: O(nd^2)$
+    \item solve d x d system of equations $: O(d^3)$
+    \item solve normal equation $X^Ty: O(d^3 + nd^2)$
+\end{enumerate}
+Gradient Descent
+\begin{enumerate}
+    \item $w^{t+1} = w^t - \alpha^t \nabla f(w^t) = w^t -  X^T(Xw^t-y)$ (least square)
+    \item cost $O(nd)$ no need to form $X^TX$
+    \item total cost $O(ndt)$
+    \item faster for large d, works generally
+\end{enumerate}
 
 
 
