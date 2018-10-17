@@ -47,49 +47,83 @@
 \begin{document}
 
 \begin{minipage}{0.45\textwidth}
-    \subsection{Decision Tree (Supervised)}
-    \subsection{Naive Bayes (Supervised)}
-    \subsection{KNN (Supervised)}
-    \subsection{K-Means (Unsupervised)}
-    \subsection{DBSCAN (Unsupervised)}
-    \subsection{Outlier Detection Methods}
-    \subsection{Linear Regression (Supervised)}
-    \subsection{Non-linear Regression (Supervised)}
+    \vspace{-13em}
+    \textbf{Supervised}
+    \enum{
+        \item
+            Decision Tree \\
+            \texttt{PSEUDO CODE HERE with O(n) on steps}
+        \item
+            \text{Naive Bayes } \\
+            \texttt{PSEUDO CODE HERE with O(n) on steps}
+        \item
+            \text{KNN }
+            \items{
+                \item Non-Parametric
+                \item fit cost: store $O(nd)$
+                \item Prediction Cost: $O(nd)$ ?
+                \item Usage:
+            }
+            \texttt{PSEUDO CODE HERE with O(n) on steps}
+        \item
+            \text{Linear Regression }
+        \item
+            \text{Non-linear Regression (Supervised)}
+    }
+    \textbf{Unsupervised}
+    \enum{
+        \item
+            \text{K-Means (Unsupervised)}
+            \texttt{PSEUDO CODE HERE with O(n) on steps}
+        \item
+            \text{DBSCAN (Unsupervised)}
+        \item
+            \text{Outlier Detection Methods}
+    }
+    
 \end{minipage}
 \hfill
 \begin{minipage}{0.45\textwidth}
 \begin{tabular}{|p{\textwidth}}
-    \subsection{Ensemble Methods}
-    \subsection{Cross-Validation}
-    \subsection{Definitions}
-    \subsection{Linear Algebra Notes}
-    Basics
-\begin{enumerate}
-    \item $w^T x_i = \sum_{j=1}^d w_j x_{ij}$,  $x_i, w$ is $d$ x $1$  
-    \item $a^T A b = b^T B^T a$ both sides are vectors
-    \item $\half\|Xw-y\|^2_2 = \half \sum_{i=1}^n (w^T x_i -y_i) = \half w^T X^T X w -w^TX^Ty + \half y^Ty$
-    \item $\nabla \text{const} = 0, \nabla w^t b = w, \nabla \half w^T A w = Aw$ if $A$ symmetric
-    \item $\nabla \half\|Xw-y\|^2_2 = X^T X -X^Ty$ 
-    \item Normal equation $X^T Xw =X^Ty$
-\end{enumerate}
-Run Time
-\begin{enumerate}
-    \item $X^Ty: O(nd)$
-    \item $X^TX: O(nd^2)$
-    \item solve d x d system of equations $: O(d^3)$
-    \item solve normal equation $X^Ty: O(d^3 + nd^2)$
-\end{enumerate}
-Gradient Descent
-\begin{enumerate}
-    \item $w^{t+1} = w^t - \alpha^t \nabla f(w^t) = w^t -  X^T(Xw^t-y)$ (least square)
-    \item cost $O(nd)$ no need to form $X^TX$
-    \item total cost $O(ndt)$
-    \item faster for large d, works generally
-\end{enumerate}
-
-
-    \subsection{Multivariable Calc Notes}
-    \subsection{Probability Notes}
+    \enum{
+    \item
+        \text{Ensemble Methods}
+    \item
+        \text{Cross-Validation}
+        \texttt{PSEUDO CODE HERE with O(n) on steps}
+    \item
+        \text{Definitions}
+    \item
+    \text{Linear Algebra Notes}
+    \text{Basics}
+        \enum{
+            \item $w^T x_i = \sum_{j=1}^d w_j x_{ij}$,  $x_i, w$ is $d$ x $1$  
+            \item $a^T A b = b^T B^T a$ both sides are vectors
+            \item $\half\|Xw-y\|^2_2 = \half \sum_{i=1}^n (w^T x_i -y_i) = \half w^T X^T X w -w^TX^Ty + \half y^Ty$
+            \item $\nabla \text{const} = 0, \nabla w^t b = w, \nabla \half w^T A w = Aw$ if $A$ symmetric
+            \item $\nabla \half\|Xw-y\|^2_2 = X^T Xw -X^Ty$ 
+            \item Normal equation $X^T Xw =X^Ty$
+            \item $(Xw-y)^T V (Xw-y) = \sum_{i=1}^n v_i (w^T x_i -y_i)^2$
+        }
+        Run Time
+        \enum{
+            \item $X^Ty: O(nd)$
+            \item $X^TX: O(nd^2)$
+            \item solve d x d system of equations $: O(d^3)$
+            \item solve normal equation $: O(d^3 + nd^2)$
+        }
+        Gradient Descent
+        \enum{
+            \item $w^{t+1} = w^t - \alpha^t \nabla f(w^t) = w^t -  X^T(Xw^t-y)$ (least square)
+            \item cost $O(nd)$ no need to form $X^TX$
+            \item total cost $O(ndt)$
+            \item faster for large d, works generally
+        }
+    \item
+        \text{Multivariable Calc Notes}
+    \item
+        \text{Probability Notes}
+    }
 \end{tabular}
 \end{minipage}
 
