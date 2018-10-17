@@ -45,23 +45,31 @@
         
 
 \begin{document}
-% \par
-\begin{Parallel}[v]{0.48\textwidth}{0.48\textwidth}
-\ParallelLText{
-% \begin{minipage}{0.45\textwidth}
-% \begin{tabular}{|p{\textwidth}}
 
-% \vspace{-3em}
-
-\section*{Linear Algebra}
-\vspace{-1em}
-Basics
+\begin{minipage}{0.45\textwidth}
+    \subsection{Decision Tree (Supervised)}
+    \subsection{Naive Bayes (Supervised)}
+    \subsection{KNN (Supervised)}
+    \subsection{K-Means (Unsupervised)}
+    \subsection{DBSCAN (Unsupervised)}
+    \subsection{Outlier Detection Methods}
+    \subsection{Linear Regression (Supervised)}
+    \subsection{Non-linear Regression (Supervised)}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\begin{tabular}{|p{\textwidth}}
+    \subsection{Ensemble Methods}
+    \subsection{Cross-Validation}
+    \subsection{Definitions}
+    \subsection{Linear Algebra Notes}
+    Basics
 \begin{enumerate}
     \item $w^T x_i = \sum_{j=1}^d w_j x_{ij}$,  $x_i, w$ is $d$ x $1$  
     \item $a^T A b = b^T B^T a$ both sides are vectors
     \item $\half\|Xw-y\|^2_2 = \half \sum_{i=1}^n (w^T x_i -y_i) = \half w^T X^T X w -w^TX^Ty + \half y^Ty$
     \item $\nabla \text{const} = 0, \nabla w^t b = w, \nabla \half w^T A w = Aw$ if $A$ symmetric
-    \item $\nabla \half\|Xw-y\|^2_2 = X^T X -X^Ty$
+    \item $\nabla \half\|Xw-y\|^2_2 = X^T X -X^Ty$ 
     \item Normal equation $X^T Xw =X^Ty$
 \end{enumerate}
 Run Time
@@ -80,13 +88,9 @@ Gradient Descent
 \end{enumerate}
 
 
+    \subsection{Multivariable Calc Notes}
+    \subsection{Probability Notes}
+\end{tabular}
+\end{minipage}
 
-
-
-
-}
-\ParallelPar
-\end{Parallel}
-% \end{tabular}
-% \end{minipage}%
 \end{document}
