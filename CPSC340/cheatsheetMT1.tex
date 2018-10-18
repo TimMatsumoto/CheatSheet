@@ -16,6 +16,8 @@
     \usepackage[noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt]{enumitem}
     \setitemize{noitemsep,topsep=0pt,parsep=0pt,partopsep=0pt}
     \usepackage{parallel}
+    \usepackage{pdfpages}
+
     % Colors
     \definecolor{blu}{rgb}{0,0,1}
     \def\blu#1{{\color{blu}#1}}
@@ -52,26 +54,32 @@
     \enum{
         \item
             Decision Stump \\
-            Total Run Time: $O(ndk)$ (‘k’ thresholds for each of ‘d’ features) \\
+            fit: $O(nd \log n)$ \\
             \texttt{PSEUDO CODE HERE with O(n) on steps}
         \item
             Decision Tree \\
+            fit: $O(mnd \log n)$ m depth
             \texttt{PSEUDO CODE HERE with O(n) on steps}
         \item
             \text{Naive Bayes } \\
             Bayes Rule: 
             $p(y_i| x_i) = \frac{p(x_i | y_i)\cdot p(y_i)}{p(x_i)}$ \\
-            \texttt{PSEUDO CODE HERE with O(n) on steps}
+            runtime fit: $O(nd)$ go thru X and count\\ 
         \item
             \text{KNN }
             \items{
                 \item Non-Parametric
-                \item fit cost: store $O(nd)$
-                \item Prediction Cost: $O(nd)$ 
+                % \item fit cost: store $O(nd)$
+                \item Prediction Cost: $O(n^2(d+k))$ 
                 \item depends on norm
                 \item Usage:
             }
-            \texttt{PSEUDO CODE HERE with O(n) on steps}
+            \texttt{
+                for each $x_i$ $O(n)$, \\
+                find the distance $O(d)$ \\
+                to each example $O(n)$. \\
+                compute the average of the closest k $O(k)$
+            }
         \item
             \text{Linear Regression }
         \item
@@ -80,24 +88,35 @@
     \textbf{Unsupervised}
     \enum{
         \item
-            \text{K-Means (Unsupervised)} 
+            \text{K-Means } 
             \items{
                 \item Parametric (k, W weights)
                 \item fit cost: store $O(ndk)$
-                \item update: $O(nd)$ 
-                \item Prediction Cost: $O(nd)$ 
+                \item update: $O(ndk)$ 
+                % \item Prediction Cost: $O(nd)$ 
                 \item depends on initialization
                 \item Usage: convex clustering, vector quantization, Outlier Detection
             }
-            \texttt{PSEUDO CODE HERE with O(n) on steps}
+            \texttt{
+                for each $x_i$ $O(n)$, find the distance $O(d)$ to k centers $O(k)$; \\
+                assign  $x_i$ to closest center; \\
+                update means (centers) $O(ndk)$; \\
+                repeat this until the closest center does not change $O(T)$             
+            }
         \item
-            \text{DBSCAN (Unsupervised)}
+            \text{DBSCAN }
             \items{
                 \item Non-Parametric ($\epsilon,$ MinNbr)
-                \item fit cost: store $O()$
-                \item update: $O()$ 
-                \item Prediction Cost: $O()$ 
                 \item problem: different densities 
+            }
+            \texttt{
+                for each $x_i$ $O(n)$, \\
+                if already assigned, do nothing \\
+                check if $\geq MinNbrs$ within $\epsilon$ \\
+                if not, do nothing, if so 'expand' cluster. \\
+                To expand, \\
+                assign all $\epsilon$ nbrs to this cluster. \\
+                repeat for each added points.
             }
         \item
             \text{Outlier Detection Methods}
@@ -112,30 +131,36 @@
             Recommender?
     }
 
-
-
-
-
 \end{minipage}
-\hfill
-\begin{minipage}{0.45\textwidth}
+% \hfill
+\begin{minipage}{0.55\textwidth}
 % \begin{tabular}{|p{\textwidth}}
-    % \vspace{-3em}
+    \vspace{-18em}
     \textbf{Something}
     \enum{
         \item
             Golden Rule: \\
-            Test data must not influence int the training phase in any way. 
+            Test data must not influence in the training phase in any way. 
         \item
             Fundamental Trade Off:\\
             $E_{test} = (E_{test} -E_{train}) + E_{train}$ \\
             $E_{appx}$ gets smaller as n larger, grows as model gets complicated 
         \item
-            \text{Ensemble Methods}
+            \text{Random Forest}
+            \items{
+            \item Parametric (trees, depth of each)
+            \item fit cost: store $O(ndk)$
+            \item update: $O(ndk)$ }
         \item
             \text{Cross-Validation} \\
-            k-fold CV runtime: $O()$ \\
-            \texttt{PSEUDO CODE HERE with O(n) on steps}
+            runtime (fit): k x runtime of the fit \\
+            runtime (predict): k x runtime of the predict \\
+            \texttt{
+                for each k fold $O(k)$, \\
+                train on the rest $O(((k-1)/k)n) \times \text{fit time}$ \\
+                predict on the fold $O(n/k) \times \text{predict time}$ \\
+            }
+            % Total Cost: $O(kn^2d+ nd^2)$
         \item
             \text{Definitions}
         \item
@@ -145,7 +170,7 @@
                 \item $w^T x_i = \sum_{j=1}^d w_j x_{ij}$,  $x_i, w$ is $d$ x $1$  
                 \item $a^T A b = b^T B^T a$ both sides are vectors
                 \item $\half\|Xw-y\|^2_2 = \half \sum_{i=1}^n (w^T x_i -y_i) = \half w^T X^T X w -w^TX^Ty + \half y^Ty$
-                \item $\nabla \text{const} = 0, \nabla w^t b = w, \nabla \half w^T A w = Aw$ if $A$ symmetric
+                \item $\nabla w^t b = w, \nabla \half w^T A w = Aw$ if $A$ symmetric
                 \item $\nabla \half\|Xw-y\|^2_2 = X^T Xw -X^Ty$ 
                 \item Normal equation $X^T Xw =X^Ty$
                 \item $(Xw-y)^T V (Xw-y) = \sum_{i=1}^n v_i (w^T x_i -y_i)^2$
@@ -161,7 +186,7 @@
             \items{
                 \item $w^{t+1} = w^t - \alpha^t \nabla f(w^t) = w^t -  X^T(Xw^t-y)$ (least square)
                 \item cost $O(nd)$ no need to form $X^TX$
-                \item total cost $O(ndt)$
+                \item total cost $O(ndt)$ t iterations 
                 \item faster for large d, works generally
             }
         \item
@@ -172,5 +197,9 @@
     
 % \end{tabular}
 \end{minipage}
+
+\newpage 
+    \includegraphics[scale=0.4]{NaiveBayes.pdf}
+
 
 \end{document}
