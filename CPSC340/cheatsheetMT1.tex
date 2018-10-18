@@ -47,21 +47,28 @@
 \begin{document}
 
 \begin{minipage}{0.45\textwidth}
-    \vspace{-13em}
+    % \vspace{-13em}
     \textbf{Supervised}
     \enum{
+        \item
+            Decision Stump \\
+            Total Run Time: $O(ndk)$ (‘k’ thresholds for each of ‘d’ features) \\
+            \texttt{PSEUDO CODE HERE with O(n) on steps}
         \item
             Decision Tree \\
             \texttt{PSEUDO CODE HERE with O(n) on steps}
         \item
             \text{Naive Bayes } \\
+            Bayes Rule: 
+            $p(y_i| x_i) = \frac{p(x_i | y_i)\cdot p(y_i)}{p(x_i)}$ \\
             \texttt{PSEUDO CODE HERE with O(n) on steps}
         \item
             \text{KNN }
             \items{
                 \item Non-Parametric
                 \item fit cost: store $O(nd)$
-                \item Prediction Cost: $O(nd)$ ?
+                \item Prediction Cost: $O(nd)$ 
+                \item depends on norm
                 \item Usage:
             }
             \texttt{PSEUDO CODE HERE with O(n) on steps}
@@ -73,58 +80,97 @@
     \textbf{Unsupervised}
     \enum{
         \item
-            \text{K-Means (Unsupervised)}
+            \text{K-Means (Unsupervised)} 
+            \items{
+                \item Parametric (k, W weights)
+                \item fit cost: store $O(ndk)$
+                \item update: $O(nd)$ 
+                \item Prediction Cost: $O(nd)$ 
+                \item depends on initialization
+                \item Usage: convex clustering, vector quantization, Outlier Detection
+            }
             \texttt{PSEUDO CODE HERE with O(n) on steps}
         \item
             \text{DBSCAN (Unsupervised)}
+            \items{
+                \item Non-Parametric ($\epsilon,$ MinNbr)
+                \item fit cost: store $O()$
+                \item update: $O()$ 
+                \item Prediction Cost: $O()$ 
+                \item problem: different densities 
+            }
         \item
             \text{Outlier Detection Methods}
+            \items{
+                \item Model-based methods
+                \item Graphical approaches (scatter plot)
+                \item Cluster-based methods (k-means DBSCAN)
+                \item Distance-based methods (KNN)
+                \item Supervised-learning methods    
+            }
+        \item
+            Recommender?
     }
-    
+
+
+
+
+
 \end{minipage}
 \hfill
 \begin{minipage}{0.45\textwidth}
-\begin{tabular}{|p{\textwidth}}
+% \begin{tabular}{|p{\textwidth}}
+    % \vspace{-3em}
+    \textbf{Something}
     \enum{
-    \item
-        \text{Ensemble Methods}
-    \item
-        \text{Cross-Validation}
-        \texttt{PSEUDO CODE HERE with O(n) on steps}
-    \item
-        \text{Definitions}
-    \item
-    \text{Linear Algebra Notes}
-    \text{Basics}
-        \enum{
-            \item $w^T x_i = \sum_{j=1}^d w_j x_{ij}$,  $x_i, w$ is $d$ x $1$  
-            \item $a^T A b = b^T B^T a$ both sides are vectors
-            \item $\half\|Xw-y\|^2_2 = \half \sum_{i=1}^n (w^T x_i -y_i) = \half w^T X^T X w -w^TX^Ty + \half y^Ty$
-            \item $\nabla \text{const} = 0, \nabla w^t b = w, \nabla \half w^T A w = Aw$ if $A$ symmetric
-            \item $\nabla \half\|Xw-y\|^2_2 = X^T Xw -X^Ty$ 
-            \item Normal equation $X^T Xw =X^Ty$
-            \item $(Xw-y)^T V (Xw-y) = \sum_{i=1}^n v_i (w^T x_i -y_i)^2$
-        }
-        Run Time
-        \enum{
-            \item $X^Ty: O(nd)$
-            \item $X^TX: O(nd^2)$
-            \item solve d x d system of equations $: O(d^3)$
-            \item solve normal equation $: O(d^3 + nd^2)$
-        }
-        Gradient Descent
-        \enum{
-            \item $w^{t+1} = w^t - \alpha^t \nabla f(w^t) = w^t -  X^T(Xw^t-y)$ (least square)
-            \item cost $O(nd)$ no need to form $X^TX$
-            \item total cost $O(ndt)$
-            \item faster for large d, works generally
-        }
-    \item
-        \text{Multivariable Calc Notes}
-    \item
-        \text{Probability Notes}
+        \item
+            Golden Rule: \\
+            Test data must not influence int the training phase in any way. 
+        \item
+            Fundamental Trade Off:\\
+            $E_{test} = (E_{test} -E_{train}) + E_{train}$ \\
+            $E_{appx}$ gets smaller as n larger, grows as model gets complicated 
+        \item
+            \text{Ensemble Methods}
+        \item
+            \text{Cross-Validation} \\
+            k-fold CV runtime: $O()$ \\
+            \texttt{PSEUDO CODE HERE with O(n) on steps}
+        \item
+            \text{Definitions}
+        \item
+            \text{Linear Algebra Notes} \\
+            \text{Basics}
+            \items{
+                \item $w^T x_i = \sum_{j=1}^d w_j x_{ij}$,  $x_i, w$ is $d$ x $1$  
+                \item $a^T A b = b^T B^T a$ both sides are vectors
+                \item $\half\|Xw-y\|^2_2 = \half \sum_{i=1}^n (w^T x_i -y_i) = \half w^T X^T X w -w^TX^Ty + \half y^Ty$
+                \item $\nabla \text{const} = 0, \nabla w^t b = w, \nabla \half w^T A w = Aw$ if $A$ symmetric
+                \item $\nabla \half\|Xw-y\|^2_2 = X^T Xw -X^Ty$ 
+                \item Normal equation $X^T Xw =X^Ty$
+                \item $(Xw-y)^T V (Xw-y) = \sum_{i=1}^n v_i (w^T x_i -y_i)^2$
+            }
+            Run Time
+            \items{
+                \item $X^Ty: O(nd)$
+                \item $X^TX: O(nd^2)$
+                \item solve d x d system of equations $: O(d^3)$
+                \item solve normal equation $: O(d^3 + nd^2)$
+            }
+            Gradient Descent
+            \items{
+                \item $w^{t+1} = w^t - \alpha^t \nabla f(w^t) = w^t -  X^T(Xw^t-y)$ (least square)
+                \item cost $O(nd)$ no need to form $X^TX$
+                \item total cost $O(ndt)$
+                \item faster for large d, works generally
+            }
+        \item
+            \text{Multivariable Calc Notes}
+        \item
+            \text{Probability Notes}
     }
-\end{tabular}
+    
+% \end{tabular}
 \end{minipage}
 
 \end{document}
