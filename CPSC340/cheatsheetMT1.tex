@@ -54,22 +54,28 @@
     \enum{
         \item
             Decision Stump \\
-            fit: $O(nd \log n)$ \\
-            \texttt{PSEUDO CODE HERE with O(n) on steps}
+            fit: $O(ndk), \text{ or for } k=n , O(nd \log n)$ \\
+            \texttt{
+                for each feature, $O(d)$\\
+                for each threshold $O(k)$\\
+                label example if it satisfies and predict\\
+                compute score $O(n)$\\
+                store rule.
+            }
         \item
             Decision Tree \\
-            fit: $O(mnd \log n)$ m depth
+            fit: $O(mnd \log n)$ m depth\\
+            predict: $O(m)$ m depth\\
             \texttt{PSEUDO CODE HERE with O(n) on steps}
         \item
             \text{Naive Bayes } \\
             Bayes Rule: 
             $p(y_i| x_i) = \frac{p(x_i | y_i)\cdot p(y_i)}{p(x_i)}$ \\
-            runtime fit: $O(nd)$ go thru X and count\\ 
+            runtime fit: $O(nd)$ go thru X and count
         \item
             \text{KNN }
             \items{
                 \item Non-Parametric
-                % \item fit cost: store $O(nd)$
                 \item Prediction Cost: $O(n^2(d+k))$ 
                 \item depends on norm
                 \item Usage:
@@ -101,7 +107,7 @@
                 for each $x_i$ $O(n)$, find the distance $O(d)$ to k centers $O(k)$; \\
                 assign  $x_i$ to closest center; \\
                 update means (centers) $O(ndk)$; \\
-                repeat this until the closest center does not change $O(T)$             
+                repeat this until the closest center does not change $O(1)$ bounded             
             }
         \item
             \text{DBSCAN }
@@ -127,15 +133,11 @@
                 \item Distance-based methods (KNN)
                 \item Supervised-learning methods    
             }
-        \item
-            Recommender?
     }
 
 \end{minipage}
-% \hfill
 \begin{minipage}{0.55\textwidth}
-% \begin{tabular}{|p{\textwidth}}
-    \vspace{-18em}
+    \vspace{-20em}
     \textbf{Something}
     \enum{
         \item
@@ -156,13 +158,11 @@
             runtime (fit): k x runtime of the fit \\
             runtime (predict): k x runtime of the predict \\
             \texttt{
+                if sorted, choose randomly \\
                 for each k fold $O(k)$, \\
                 train on the rest $O(((k-1)/k)n) \times \text{fit time}$ \\
                 predict on the fold $O(n/k) \times \text{predict time}$ \\
             }
-            % Total Cost: $O(kn^2d+ nd^2)$
-        \item
-            \text{Definitions}
         \item
             \text{Linear Algebra Notes} \\
             \text{Basics}
@@ -174,6 +174,8 @@
                 \item $\nabla \half\|Xw-y\|^2_2 = X^T Xw -X^Ty$ 
                 \item Normal equation $X^T Xw =X^Ty$
                 \item $(Xw-y)^T V (Xw-y) = \sum_{i=1}^n v_i (w^T x_i -y_i)^2$
+                \item $= \half w^T X^TV X w -w^TX^TVy + \half y^TVy$
+                \item $\nabla (Xw-y)^T V (Xw-y) = X^TVXw - X^TVy$
             }
             Run Time
             \items{
@@ -189,13 +191,8 @@
                 \item total cost $O(ndt)$ t iterations 
                 \item faster for large d, works generally
             }
-        \item
-            \text{Multivariable Calc Notes}
-        \item
-            \text{Probability Notes}
     }
     
-% \end{tabular}
 \end{minipage}
 
 \newpage 
